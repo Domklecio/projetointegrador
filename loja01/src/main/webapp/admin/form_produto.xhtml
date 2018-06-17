@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<!-- Bootstrap core CSS -->
+	<link href="resources/css/bootstrap.min.css" rel="stylesheet" />
+	<!-- Custom styles for this template -->
+	<link href="resources/css/starter-template.css" rel="stylesheet" />
+	<title>Cadastro de Produto</title>
+</h:head>
+<h:body>
+	<!-- Menu -->
+	<h:panelGrid columns="1" cellpadding="0" style="float:justify;"
+		borde="1">
+		<h:form id="form">
+			<div>
+
+					<div>
+						<p:menubar style="float:justify;">
+							<p:menuitem value="Home  |"
+								url="#{resquest.contextPath}/admin/inicio.xhtml" />
+
+							<p:menuitem value="Área do Administrador"
+								url="#{resquest.contextPath}/admin/principal.xhtml" />
+						</p:menubar>
+					</div>
+
+					<h:panelGrid columns="1" style="float:justify;" />
+					<h:panelGrid>
+						<h:panelGrid columns="17" cellpadding="0" style="float:justify;"
+							border="0">
+							<h:graphicImage value="#{resource['/imagens/logo.png']}"
+								height="100" width="300" />
+							<p:inputText id="name" />
+
+							<p:commandButton value="Pesquisar" update="display"
+								icon="ui-icon-check" />
+							<h:outputText id="display" value="#{basicView.text}" />
+
+							<p:link outcome="/admin/principal.xhtml"
+								value="Olá, Seja bem vindo ">
+								<h:outputText value="#{pessoa.nome}" />
+								<f:param name="acesso" value="3" />
+							</p:link>
+						<h:outputText value="#{pessoaCtrl.listapessoa.nome}" />
+						
+						| 
+						<p:link outcome="/admin/carrinhoadm.xhtml" value=" Seu carrinho">
+								<f:param name="carrinho  " value="1" />
+							</p:link>
+						
+						| 
+						
+				<h:outputLink
+								onclick="document.location='#{request.contextPath}/j_spring_security_logout' ">
+								<h:outputText value="Sair" />
+							</h:outputLink>
+						</h:panelGrid>
+
+						<h:form prependId="true">
+
+							<div align="center">
+
+
+								<p:tabMenu activeIndex="#{param.i}">
+
+								
+									<p:menuitem value="Área do administrador"
+										outcome="/admin/principal.xhtml">
+										<f:param name="i" value="1" />
+									</p:menuitem>
+									<p:menuitem value="Formas de pagamento"
+										outcome="/admin/pagamento.xhtml">
+										<f:param name="i" value="1" />
+									</p:menuitem>
+									<p:menuitem value="Inserir Produtos"
+										outcome="/admin/form_produto.xhtml">
+										<f:param name="i" value="2" />
+									</p:menuitem>
+									<p:menuitem value="Lista produtos"
+										outcome="/admin/lista_produto.xhtml">
+										<f:param name="i" value="4" />
+									</p:menuitem>
+
+									<p:menuitem value="Usuarios cadastrados"
+										outcome="/admin/consulta.xhtml">
+										<f:param name="i" value="4" />
+									</p:menuitem>
+
+								</p:tabMenu>
+							</div>
+
+							<!-- Inicio do codigo -->
+
+							<h1 class="mt-5">Cadastro de Produtos</h1>
+							<p>
+								<p:messages autoUpdate="true" id="msg" />
+
+								<h:form id="form">
+									<p:panelGrid columns="2">
+
+
+										<p:outputLabel for="produto" value="Produto" />
+										<p:selectOneMenu id="produto"
+											value="#{produtoCtrl.produto.nome}" style="width:125px">
+											<f:selectItem itemLabel="Opções" itemValue="" />
+											<f:selectItem itemLabel="Celular" itemValue="Celular" />
+											<f:selectItem itemLabel="Notebook" itemValue="Notebook" />
+											<f:selectItem itemLabel="Tablet" itemValue="Tablet" />
+											<f:selectItem itemLabel="Periferico" itemValue="Periferico" />
+											<f:selectItem itemLabel="Monitor" itemValue="Monitor" />
+											<f:selectItem itemLabel="outros" itemValue="outros" />
+										</p:selectOneMenu>
+
+
+										<p:outputLabel for="tipo" value="Tipo" />
+										<p:selectOneMenu id="tipo" value="#{produtoCtrl.produto.tipo}"
+											style="width:125px">
+
+											<f:selectItem itemLabel="Opções" itemValue="" />
+											<f:selectItem itemLabel="Telefones e Acessórios"
+												itemValue="Telefones e Acessórios" />
+											<f:selectItem itemLabel="Computadores e Redes"
+												itemValue="Computadores e Redes" />
+											<f:selectItem itemLabel="Eletrônicos" itemValue="Eletrônicos" />
+											<f:selectItem itemLabel="Esporte" itemValue="Esporte" />
+											<f:selectItem itemLabel="Casa e Jardim"
+												itemValue="Casa e Jardim" />
+											<f:selectItem itemLabel="Automóveis e Motocicletas"
+												itemValue="Automóveis e Motocicletas" />
+										</p:selectOneMenu>
+
+
+										<p:outputLabel for="marca" value="Marca" />
+										<p:selectOneMenu id="marca"
+											value="#{produtoCtrl.produto.marca}" style="width:125px">
+											<f:selectItem itemLabel="Opções" itemValue="" />
+											<f:selectItem itemLabel="Motorola" itemValue="Motorola" />
+											<f:selectItem itemLabel="Apple" itemValue="Apple" />
+											<f:selectItem itemLabel="Lg" itemValue="Lg" />
+											<f:selectItem itemLabel="Asus" itemValue="Asus" />
+											<f:selectItem itemLabel="Nokia" itemValue="Nokia" />
+											<f:selectItem itemLabel="Sansung" itemValue="Sansung" />
+											<f:selectItem itemLabel="Intel" itemValue="Intel" />
+											<f:selectItem itemLabel="Alcatel" itemValue="Alcatel" />
+											<f:selectItem itemLabel="Multliaser" itemValue="Multilaser" />
+											<f:selectItem itemLabel="Outros" itemValue="Outros" />
+										</p:selectOneMenu>
+
+
+										<p:outputLabel value="Modelo" for="modelo" />
+										<p:inputText id="modelo" value="#{produtoCtrl.produto.modelo}"
+											required="true" />
+
+
+										<p:outputLabel value="Preço a prazo" for="preco" />
+										<p:inputText id="preco" value="#{produtoCtrl.produto.preco}"
+											required="true" />
+
+										<p:outputLabel value="Preço a Vista" for="vista" />
+										<p:inputText id="vista" value="#{produtoCtrl.produto.vista}"
+											required="true" />
+
+										<p:outputLabel value="Descrição" for="descricao" />
+										<p:inputTextarea rows="10" cols="50" queryDelay="750"
+											minQueryLength="4" id="descricao"
+											value="#{produtoCtrl.produto.descricao}" required="true" />
+
+
+									</p:panelGrid>
+									<p:commandButton value="Salvar" id="actionGravarproduto"
+										update="dataTableProduto, form"
+										action="#{produtoCtrl.actionGravar}">
+									</p:commandButton>
+
+									<h1>Tabela de Produtos</h1>
+
+									<p:dataTable value="#{produtoCtrl.listagem}" var="p" border="1"
+										id="dataTableProduto">
+										<p:column headerText="Marca">#{p.marca}</p:column>
+										<p:column headerText="Modelo">#{p.modelo}</p:column>
+										<p:column headerText="Preço">#{p.preco}</p:column>
+										<p:column headerText="Ações">
+
+											<p:commandButton value="Alterar" immediate="true"
+												update="dataTableProduto, form"
+												action="#{produtoCtrl.actionAlterar(p)}">
+											</p:commandButton>
+
+											<p:commandButton value="Excluir" update="dataTableProduto"
+												immediate="true" action="#{produtoCtrl.actionExcluir(p)}"
+												onclick="if (!confirm('Confirma a exclusão ?')) return false;">
+											</p:commandButton>
+
+										</p:column>
+									</p:dataTable>
+								</h:form>
+							</p>
+						</h:form>
+					</h:panelGrid>
+				</div>
+		</h:form>
+	</h:panelGrid>
+</h:body>
+</html>

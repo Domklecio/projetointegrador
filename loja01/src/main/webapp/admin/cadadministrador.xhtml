@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pm="http://primefaces.org/mobile">
+
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<!-- Bootstrap core CSS -->
+	<link href="resources/css/bootstrap.min.css" rel="stylesheet" />
+	<!-- Custom styles for this template -->
+	<link href="resources/css/starter-template.css" rel="stylesheet" />
+	<title>Cadastre-se</title>
+</h:head>
+<h:body>
+
+	<!-- Menu -->
+	<h:panelGrid columns="1" cellpadding="0" style="float:justify;"
+		borde="1">
+		<h:form id="form">
+			<div>
+
+				<div>
+
+				<div>
+					<p:menubar style="float:justify;">
+						<p:menuitem value="Home  |"
+							url="#{resquest.contextPath}/admin/inicio.xhtml" />
+
+						<p:menuitem value="Área do Administrador"
+							url="#{resquest.contextPath}/admin/principal.xhtml" />
+					</p:menubar>
+				</div>
+
+				<h:panelGrid columns="1" style="float:justify;" />
+				<h:panelGrid>
+					<h:panelGrid columns="17" cellpadding="0" style="float:justify;"
+						border="0">
+						<h:graphicImage value="#{resource['/imagens/logo.png']}"
+							height="100" width="300" />
+						<p:inputText id="name" />
+
+						<p:commandButton value="Pesquisar" update="display"
+							icon="ui-icon-check" />
+						<h:outputText id="display" value="#{basicView.text}" />
+
+						<p:link outcome="/admin/principal.xhtml"
+							value="Olá, Seja bem vindo ">
+							<h:outputText value="#{pessoa.nome}" />
+							<f:param name="acesso" value="3" />
+						</p:link>
+						<h:outputText value="#{pessoaCtrl.listapessoa.nome}" />
+						
+						| 
+						<p:link outcome="/admin/carrinhoadm.xhtml" value=" Seu carrinho">
+							<f:param name="carrinho  " value="1" />
+						</p:link>
+						
+						| 
+						
+				<h:outputLink
+							onclick="document.location='#{request.contextPath}/j_spring_security_logout' ">
+							<h:outputText value="Sair" />
+						</h:outputLink>
+					</h:panelGrid>
+					
+					</h:panelGrid>
+
+				<!-- Inicio do codigo -->
+
+				<p:fieldset legend="Criar uma conta nova" columns="2">
+
+					<h:panelGrid columns="2" cellpadding="0">
+
+
+						<p:outputLabel value="Nome completo" for="nome" />
+						<p:inputText id="nome" value="#{pessoaCtrl.pessoa.nome}"
+							required="true" />
+						<p:outputLabel value="CPF" for="cpf" />
+						<p:inputText id="cpf" mask="999.999.999-99"
+							value="#{pessoaCtrl.pessoa.cpf}" required="true" />
+
+						<p:outputLabel value="Rua" for="rua" />
+						<p:inputText id="rua" value="#{pessoaCtrl.pessoa.rua}"
+							required="true" />
+
+						<p:outputLabel value="Rg" for="rg" />
+						<p:inputText id="rg" value="#{pessoaCtrl.pessoa.rg}"
+							required="true" />
+
+						<p:outputLabel value="Data Nasc" />
+					    <p:calendar id="button" value="#{pessoaCtrl.pessoa.data}" showOn="button" />
+											
+
+						<p:outputLabel value="Cidade" for="cidade" />
+						<p:inputText id="cidade" value="#{pessoaCtrl.pessoa.cidade}"
+							required="true" />
+
+						<p:outputLabel value="UF" for="uf" />
+						<p:inputText id="uf" value="#{pessoaCtrl.pessoa.uf}"
+							required="true" />
+
+						<p:outputLabel value="CEP" for="cep" />
+						<p:inputText id="cep" mask="99999-999"
+							value="#{pessoaCtrl.pessoa.cep}" required="true" />
+
+						<p:outputLabel value="Email" for="email" />
+						<p:inputText id="email" value="#{pessoaCtrl.pessoa.email}"
+							required="true" />
+
+						<p:outputLabel value="Senha" for="senha" />
+						<p:inputText id="senha" value="#{pessoaCtrl.pessoa.senha}"
+							required="true" />
+
+						
+								<h:outputLabel for="Permissão" value="Permissão" />
+								<h:selectOneMenu id="per" value="#{pessoaCtrl.pessoa.tipo}"
+									required="true" label="">
+									<f:selectItem itemLabel="" itemValue=""
+										noSelectionOption="true" />
+									<f:selectItem itemLabel="ROLE_ADMINISTRADOR" itemValue="ROLE_ADMINISTRADOR" />
+									<f:selectItem itemLabel="ROLE_CLIENTE" itemValue="ROLE_CLIENTE" />
+									
+								</h:selectOneMenu>
+							
+
+						<br></br>
+
+						<p:commandButton value="Salvar" id="actionGravarpessoa"
+							update="dataTableProduto, form"
+							action="#{pessoaCtrl.actionGravar}">
+						
+						</p:commandButton>
+						
+							<p:inputText type="hidden" id="tipo" value="ROLE_ADMINISTRADOR"
+							
+							required="true" />
+							
+					</h:panelGrid>
+				</p:fieldset>
+				
+				
+				<!-- Gravar telefone -->
+
+				<br></br> <br></br>
+
+				<p:fieldset legend="Telefones para contato" columns="2">
+
+					<h:panelGrid columns="2" cellpadding="0">
+					
+					<p:outputLabel value="Telefone" for="numero" />
+					<p:inputMask id="numero" mask="(99)99999-9999"
+					value="#{foneCtrl.fone.numero}" required="false" />
+					<p:outputLabel value="Contato" for="descricao" />
+					<p:inputText id="descricao" 
+					value="#{foneCtrl.fone.descricao}"
+						required="false" />
+
+					<br></br>
+
+					<p:commandButton value="Salve" id="actionGravarfone"
+						update="dataTableProduto, form" action="#{foneCtrl.actionGravar}">
+					</p:commandButton>
+
+					</h:panelGrid>
+				</p:fieldset>
+				
+				<br></br> <br></br> <br></br> <br></br> <br></br>
+
+
+				<p:dataTable value="#{pessoaCtrl.listagem}" var="p" border="0"
+					id="dataTableProduto">
+
+
+				</p:dataTable>
+
+			</div>
+		</h:form>
+	</h:panelGrid>
+</h:body>
+</html>

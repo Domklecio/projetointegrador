@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pm="http://primefaces.org/mobile">
+
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<!-- Bootstrap core CSS -->
+	<link href="resources/css/bootstrap.min.css" rel="stylesheet" />
+	<!-- Custom styles for this template -->
+	<link href="resources/css/starter-template.css" rel="stylesheet" />
+	<title>Compras</title>
+</h:head>
+<h:body>
+
+	<!-- Menu -->
+	<h:panelGrid columns="1" cellpadding="0" style="float:left;" borde="1">
+
+
+		<div>
+
+			<div>
+
+				<p:menubar style="float:justify;">
+					<p:menuitem value="Home  |"
+						url="#{resquest.contextPath}/cliente/inicio.xhtml" />
+
+					<p:menuitem value="Área do Administrador"
+						url="#{resquest.contextPath}/admin/principal.xhtml" />
+				</p:menubar>
+			</div>
+
+			<h:panelGrid columns="1" style="float:none;" />
+			<h:panelGrid columns="17" cellpadding="0" style="float:none;"
+				border="0" value="#{pessoaCtrl.listagem}" id="dataTableProduto"
+				var="pessoa">
+
+				<h:graphicImage value="#{resource['/imagens/logo.png']}"
+					height="100" width="300" />
+				<p:inputText id="name" />
+
+				<p:commandButton value="Pesquisar" update="display"
+					icon="ui-icon-check" />
+				<h:outputText id="display" value="#{basicView.text}" />
+
+				<p:link outcome="/cliente/principal.xhtml"
+					value="Olá, Seja bem vindo ">
+					<f:param name="acesso" value="3" />
+				</p:link>
+
+
+				<h:outputText value="#{pessoaCtrl.listapessoa.nome}" />
+		
+					
+						| 
+						<p:link outcome="/cliente/carrinhocli.xhtml" value=" Seu carrinho">
+					<f:param name="carrinho  " value="1" />
+				</p:link>
+						
+						| 
+						
+				<h:outputLink
+					onclick="document.location='#{request.contextPath}/j_spring_security_logout' ">
+					<h:outputText value="Sair" />
+				</h:outputLink>
+
+			</h:panelGrid>
+
+			<!--Inicio do codigo -->
+
+
+			<br></br> <br></br>
+
+			<h:form id="form">
+
+				<h:panelGrid columns="2" cellpadding="0" style="float:top;"
+					border="0">
+
+					<h:panelGrid columns="1" cellpadding="0" style="float:top;"
+						borde="3">
+
+						<p:dataTable id="dataTableProduto" value="#{carrinhoCtrl.itens}"
+							var="item">
+
+
+							<p:column headerText="">
+								<p:graphicImage
+									name="imagens/celulares/#{item.produto.marca}.jpg" height="90"
+									width="90" />
+
+							</p:column>
+							<p:column headerText="">
+								<h6 class="mt-0">
+									<h:outputText value="#{item.produto.modelo}" />
+								</h6>
+							</p:column>
+
+
+							<p:column headerText="Quantidade">
+								<p:inputText value="#{item.quantidade}" event="keyup"
+									required="true" update="form">
+									<p:ajax event="keyup" update="sub"
+										listener="#{carrinhoCtrl.verificarItemExiste(item)}"
+										global="true">
+									</p:ajax>
+								</p:inputText>
+							</p:column>
+
+							<p:column headerText="Preço">
+								<h5 class="mt-0">
+									Preço unidade R$
+									<h:outputText value="#{item.valorunit}" />
+								</h5>
+								<h5 class="mt-0">
+									Subtotal de R$
+									<h:outputText value="#{item.subtotal}" id="sub" />
+								</h5>
+							</p:column>
+
+							<p:column headerText="">
+
+								<p:commandButton value="Excluir" update="dataTableProduto"
+									action="#{carrinhoCtrl.remover(item)}">
+								</p:commandButton>
+							</p:column>
+						</p:dataTable>
+					</h:panelGrid>
+
+					<h:panelGrid columns="1" cellpadding="0" style="float:top;"
+						border="0" height="100" width="250">
+
+
+
+						<p:dataTable value="resumo">
+
+							<p:column headerText="Resumo do pedido" style="float:none;">
+								<h5 class="mt-0">
+									Subtotal de (
+									<h:outputText value="#{carrinhoCtrl.qtdItemCar}" />
+									) Produtos <br></br> R$
+									<h:outputText value="#{carrinhoCtrl.total}" />
+									_________________________ <br></br> <br></br> TOTAL DA COMPRA <br></br>
+									<br></br> R$
+									<h:outputText value="#{carrinhoCtrl.total}" />
+									<br></br> <br></br>
+
+	
+									<p:commandButton
+											style="width:220px;height:50px" value="Continuar"
+											action="/cliente/compra.xhtm" />
+											
+
+								</h5>
+								<h6 class="mt-0">
+									Possui cupom ou vale? Você poderá <br></br> usá-los na etapa de
+									pagamento.
+								</h6>
+
+							</p:column>
+						</p:dataTable>
+					</h:panelGrid>
+
+				</h:panelGrid>
+			</h:form>
+		</div>
+	</h:panelGrid>
+</h:body>
+</html>

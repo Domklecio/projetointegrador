@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Lista de Produtos</title>
+</h:head>
+<h:body>
+
+
+	<!-- Menu -->
+	<h:panelGrid columns="1" cellpadding="0" style="float:justify;"
+		borde="1">
+		<h:form id="form">
+			<div>
+
+				<div>
+					<p:menubar style="float:justify;">
+						<p:menuitem value="Home  |"
+							url="#{resquest.contextPath}/admin/inicio.xhtml" />
+
+						<p:menuitem value="Área do Administrador"
+							url="#{resquest.contextPath}/admin/principal.xhtml" />
+					</p:menubar>
+				</div>
+
+				<h:panelGrid columns="1" style="float:justify;" />
+				<h:panelGrid>
+					<h:panelGrid columns="17" cellpadding="0" style="float:justify;"
+						border="0">
+						<h:graphicImage value="#{resource['/imagens/logo.png']}"
+							height="100" width="300" />
+						<p:inputText id="name" />
+
+						<p:commandButton value="Pesquisar" update="display"
+							icon="ui-icon-check" />
+						<h:outputText id="display" value="#{basicView.text}" />
+
+						<p:link outcome="/admin/principal.xhtml"
+							value="Olá, Seja bem vindo ">
+							<h:outputText value="#{pessoa.nome}" />
+							<f:param name="acesso" value="3" />
+						</p:link>
+						<h:outputText value="#{pessoaCtrl.listapessoa.nome}" />
+						
+						| 
+						<p:link outcome="/admin/carrinhoadm.xhtml" value=" Seu carrinho">
+							<f:param name="carrinho  " value="1" />
+						</p:link>
+						
+						| 
+						
+				<h:outputLink
+							onclick="document.location='#{request.contextPath}/j_spring_security_logout' ">
+							<h:outputText value="Sair" />
+						</h:outputLink>
+					</h:panelGrid>
+
+					<h:form prependId="true">
+
+						<div align="center">
+
+
+							<p:tabMenu activeIndex="#{param.i}">
+
+
+								<p:menuitem value="Área do administrador"
+									outcome="/admin/principal.xhtml">
+									<f:param name="i" value="1" />
+								</p:menuitem>
+								<p:menuitem value="Formas de pagamento"
+									outcome="/admin/pagamento.xhtml">
+									<f:param name="i" value="1" />
+								</p:menuitem>
+								<p:menuitem value="Inserir Produtos"
+									outcome="/admin/form_produto.xhtml">
+									<f:param name="i" value="2" />
+								</p:menuitem>
+								<p:menuitem value="Lista produtos"
+									outcome="/admin/lista_produto.xhtml">
+									<f:param name="i" value="4" />
+								</p:menuitem>
+
+								<p:menuitem value="Usuarios cadastrados"
+									outcome="/admin/consulta.xhtml">
+									<f:param name="i" value="4" />
+								</p:menuitem>
+
+							</p:tabMenu>
+						</div>
+
+						<!-- Inicio do codigo -->
+
+						<div align="center">
+							<p:commandButton value="Inserir"
+								action="#{produtoCtrl.actionInserir}" />
+
+
+							<p:dataTable id="dataTableProduto"
+								value="#{produtoCtrl.listagem}" var="produto">
+								<p:column headerText="Id">
+									<h:outputText value="#{produto.id}" />
+								</p:column>
+
+								<p:column headerText="Modelo">
+									<h:outputText value="#{produto.modelo}" />
+								</p:column>
+
+								<p:column headerText="Valor do Produto">
+									<h:outputText value="#{produto.preco}" />
+								</p:column>
+
+								<p:column headerText="">
+
+									<p:commandButton value="Alterar" action="form_produto">
+										<f:setPropertyActionListener value="#{produto}"
+											target="#{produtoCtrl.produto}" />
+									</p:commandButton>
+
+								</p:column>
+
+								<p:column headerText="">
+									<p:commandButton value="Excluir" update="dataTableProduto"
+										action="#{produtoCtrl.actionExcluir(produto)}"
+										onclick="if (!confirm('Confirma a exclusão ?')) return false;">
+									</p:commandButton>
+
+								</p:column>
+
+							</p:dataTable>
+
+						</div>
+					</h:form>
+				</h:panelGrid>
+			</div>
+		</h:form>
+	</h:panelGrid>
+</h:body>
+</html>

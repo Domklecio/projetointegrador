@@ -1,0 +1,176 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Lista de formas de pagamento</title>
+</h:head>
+<h:body>
+
+	<h:panelGrid columns="1" cellpadding="0" style="float:left;" borde="1">
+
+		<div>
+
+
+			<div>
+				<p:menubar style="float:justify;">
+					<p:menuitem value="Home  |"
+						url="#{resquest.contextPath}/admin/inicio.xhtml" />
+
+					<p:menuitem value="Área do Administrador"
+						url="#{resquest.contextPath}/admin/principal.xhtml" />
+				</p:menubar>
+			</div>
+
+			<h:panelGrid columns="1" style="float:justify;" />
+			<h:panelGrid>
+				<h:panelGrid columns="17" cellpadding="0" style="float:justify;"
+					border="0">
+					<h:graphicImage value="#{resource['/imagens/logo.png']}"
+						height="100" width="300" />
+					<p:inputText id="name" />
+
+					<p:commandButton value="Pesquisar" update="display"
+						icon="ui-icon-check" />
+					<h:outputText id="display" value="#{basicView.text}" />
+
+					<p:link outcome="/admin/principal.xhtml"
+						value="Olá, Seja bem vindo ">
+						<h:outputText value="#{pessoa.nome}" />
+						<f:param name="acesso" value="3" />
+					</p:link>
+					<h:outputText value="#{pessoaCtrl.listapessoa.nome}" />
+						
+						| 
+						<p:link outcome="/admin/carrinhoadm.xhtml" value=" Seu carrinho">
+						<f:param name="carrinho  " value="1" />
+					</p:link>
+						
+						| 
+						
+				<h:outputLink
+						onclick="document.location='#{request.contextPath}/j_spring_security_logout' ">
+						<h:outputText value="Sair" />
+					</h:outputLink>
+				</h:panelGrid>
+
+
+
+				<div align="center">
+
+
+					<p:tabMenu activeIndex="#{param.i}">
+
+
+						<p:menuitem value="Area do administrador"
+							outcome="/admin/principal.xhtml">
+							<f:param name="i" value="1" />
+						</p:menuitem>
+						<p:menuitem value="Formas de pagamento"
+							outcome="/admin/pagamento.xhtml">
+							<f:param name="i" value="1" />
+						</p:menuitem>
+						<p:menuitem value="Inserir Produtos"
+							outcome="/admin/form_produto.xhtml">
+							<f:param name="i" value="2" />
+						</p:menuitem>
+						<p:menuitem value="Lista produtos"
+							outcome="/admin/lista_produto.xhtml">
+							<f:param name="i" value="4" />
+						</p:menuitem>
+
+						<p:menuitem value="Usuarios cadastrados"
+							outcome="/admin/consulta.xhtml">
+							<f:param name="i" value="4" />
+						</p:menuitem>
+
+
+					</p:tabMenu>
+				</div>
+
+
+				<h:form id="form">
+
+					<p:growl id="msgs" showdetail="true" />
+
+
+					<p:dataTable id="tbl" var="f" value="#{formaPgtoCtrl.listagem}"
+						paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+					 {PageLinks} {NextPageLink} {LastPageLink}"
+						paginator="true" rows="10" style="margin-bottom:20px">
+						<f:facet name="header">
+							<h:outputLabel value="Formas de Pagamento" />
+							<br></br>
+							<p:commandButton value="Inserir" icon="icon-novo"
+								actionListener="#{formaPgtoCtrol.actionInserir}"
+								oncomplete="PF('cadDialog').show()" update=":form:cadDetail">
+							</p:commandButton>
+						</f:facet>
+
+						<p:column headerText="Forma de pagamento" sortBy="f.descricao">
+							<h:outputText value="#{f.descricao}" />
+						</p:column>
+
+						<p:column headerText="N° Máx. Parc." sortBy="f.numMaxParc">
+							<h:outputText value="#{f.numMaxParc}" />
+						</p:column>
+
+						<p:column style="width:32px;text-align:center">
+							<p:commandButton update=":form:cadDetail"
+								oncomplete="PF('cadDialog').show()" icon="ui-icon-search"
+								title="View">
+								<f:setPropertyActionListener target="#{formaPgtoCtrl.FormaPgto}"
+									value="#{f}" />
+							</p:commandButton>
+						</p:column>
+					</p:dataTable>
+
+					<p:dialog header="Cadastro de Forma de Pagamento"
+						widgetVar="cadDialog" modal="true" showEffect="fade"
+						hideEffect="fade" resizable="false">
+						<p:outputPanel id="cadDetail" style="text-align:center;">
+							<h:panelGrid columns="2" style="text-align:Left">
+
+								<h:outputLabel value="Tipo" />
+								<p:inputText value="#{formaPgtoCtrl.formaPgto.descricao}"
+									size="30" maxlength="20" />
+								<h:outputLabel value="N° Máx.Parcelas" />
+								<p:inputText value="#{formaPgtoCtrl.formaPgto.numMaxParc}"
+									size="6" maxlength="3" />
+								<h:outputLabel value="N° Padrão de Parcelas" />
+								<p:inputText value="#{formaPgtoCtrl.formaPgto.numPadraoParc}"
+									size="6" maxlength="3" />
+								<h:outputLabel value="intervalo(dias)" />
+								<p:inputText value="#{formaPgtoCtrl.formaPgto.intervaloDias}"
+									size="6" maxlength="3" />
+
+
+
+							</h:panelGrid>
+
+
+
+							<h:commandButton value="Excluir"
+								action="#{formaPgtoCtrl.actionExcluir}" update="growl" />
+							<h:commandButton value="Gravar"
+								action="#{formaPgtoCtrl.actionGravar}" update="growl" />
+							<h:commandButton value="Cancelar" oncomplete="cadDialog.hide()" />
+
+
+
+						</p:outputPanel>
+					</p:dialog>
+
+
+				</h:form>
+			</h:panelGrid>
+		</div>
+	</h:panelGrid>
+</h:body>
+
+</html>

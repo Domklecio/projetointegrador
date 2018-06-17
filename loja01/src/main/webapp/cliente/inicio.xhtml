@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pm="http://primefaces.org/mobile">
+
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<!-- Bootstrap core CSS -->
+	<link href="resources/css/bootstrap.min.css" rel="stylesheet" />
+	<!-- Custom styles for this template -->
+	<link href="resources/css/starter-template.css" rel="stylesheet" />
+	<title>Inicio</title>
+</h:head>
+<h:body>
+
+	<!-- Menu -->
+	<h:panelGrid columns="1" cellpadding="0" style="float:justify;"
+		borde="0">
+		<h:form id="form">
+
+			<p:growl id="growl" life="2000" autoUpdate="true" />
+
+			<div>
+
+				<div>
+
+					<p:menubar style="float:justify;">
+						<p:menuitem value="Home  |"
+							url="#{resquest.contextPath}/cliente/inicio.xhtml" />
+
+						<p:menuitem value="Área do Administrador"
+							url="#{resquest.contextPath}/admin/principal.xhtml" />
+					</p:menubar>
+				</div>
+
+				<h:panelGrid columns="1" style="float:justify;" />
+				<h:panelGrid>
+					<h:panelGrid columns="17" cellpadding="0" style="float:none;"
+						border="0" value="#{pessoaCtrl.listagem}" id="dataTableProduto"
+						var="pessoa">
+
+						<h:graphicImage value="#{resource['/imagens/logo.png']}"
+							height="100" width="300" />
+						<p:inputText id="name" />
+
+						<p:commandButton value="Pesquisar" update="display"
+							icon="ui-icon-check" />
+						<h:outputText id="display" value="#{basicView.text}" />
+
+						<p:link outcome="/cliente/principal.xhtml"
+							value="Olá, Seja bem vindo ">
+							<f:param name="acesso" value="3" />
+						</p:link>
+
+						<h:outputText value="#{pessoaCtrl.listapessoa.nome}" />
+					
+						| 
+						<p:link outcome="/cliente/carrinhocli.xhtml" value=" Seu carrinho">
+							<f:param name="carrinho  " value="1" />
+						</p:link>
+						
+						| 
+						
+				<h:outputLink
+							onclick="document.location='#{request.contextPath}/j_spring_security_logout' ">
+							<h:outputText value="Sair" />
+						</h:outputLink>
+
+					</h:panelGrid>
+
+
+				</h:panelGrid>
+
+
+
+				<!-- Inicio do codigo -->
+
+				<!--  -->
+				<f:facet name="header">
+
+				</f:facet>
+
+
+
+
+				<p:fieldset style="margin-bottom:20px">
+
+
+					<p:dataGrid var="produto" value="#{produtoCtrl.dados}" columns="3"
+						layout="grid" rows="6" paginator="true" id="Produto"
+						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+						rowsPerPageTemplate="6,12,16">
+
+						<h:panelGrid columns="1" cellpadding="0">
+
+							<p:graphicImage name="imagens/celulares/#{produto.marca}.jpg"
+								height="300" width="300" />
+
+							<p:column headerText="Modelo">
+								<h:outputText value="#{produto.modelo}" />
+							</p:column>
+
+							<p:column headerText="">
+								<h5 class="mt-0">
+									A vista de R$
+									<h:outputText value="#{produto.vista}" />
+								</h5>
+								<h6 class="mt-0" style="color: red;">
+									ou R$
+									<h:outputText value="#{produto.preco}" />
+									Até 12x s/ juros
+								</h6>
+							</p:column>
+							<p:column headerText="">
+								<b></b>
+								<h:outputText value="Pedidos" />
+								<p:rating value="#{ratingView.rating4}" readonly="true" />
+							</p:column>
+							<b></b>
+
+							<p:commandButton value="Comprar" id="actionGravar"
+								action="#{carrinhoCtrl.adiciona(produto)}"
+								actionListener="#{carrinhoCtrl.mensagem}">
+
+							</p:commandButton>
+
+						</h:panelGrid>
+					</p:dataGrid>
+				</p:fieldset>
+			</div>
+		</h:form>
+	</h:panelGrid>
+</h:body>
+</html>
